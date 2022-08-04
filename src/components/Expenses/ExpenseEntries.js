@@ -66,6 +66,8 @@ export default function ExpenseEntries(props) {
       return accumulator + Number(object.amount);
     }, 0);
 
+  const a = 2 + 2;
+
   console.table(filteredExpenses);
 
   const [id, setId] = useState(props.id);
