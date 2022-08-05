@@ -14,7 +14,7 @@ export default function BookingForm(props) {
   const [enteredCheckInDate, setEnteredCheckInDate] = useState("");
   const [enteredCheckOutDate, setEnteredCheckOutDate] = useState("");
   const [enteredNumberOfDays, setEnteredNumberOfDays] = useState(0);
-  const [enteredSource, setEnteredSource] = useState("");
+  const [enteredSource, setEnteredSource] = useState("App");
   const [enteredBookingId, setEnteredBookingId] = useState("");
   const [enteredRoomNumber, setEnteredRoomNumber] = useState([]);
   const [enteredNumberOfRooms, setEnteredNumberOfRooms] = useState(0);
@@ -167,7 +167,7 @@ export default function BookingForm(props) {
     setEnteredCheckInDate("");
     setEnteredCheckOutDate("");
     setEnteredNumberOfDays(0);
-    setEnteredSource("");
+    setEnteredSource("App");
     setEnteredBookingId("");
     setEnteredRoomNumber([]);
     setEnteredNumberOfRooms(0);
@@ -204,7 +204,7 @@ export default function BookingForm(props) {
               onChange={checkOutDateChangeHandler}
             ></input>
           </div>
-          <div className="new-booking__control">
+          <div className="new-booking__control new-booking__control_readOnly">
             <label>No. of days</label>
             <input type="number" disabled value={enteredNumberOfDays}></input>
           </div>
@@ -249,6 +249,9 @@ export default function BookingForm(props) {
                 </Box>
               )}
             >
+              <MenuItem disabled value="">
+                <em>Select room</em>
+              </MenuItem>
               {rooms.map((room) => (
                 <MenuItem key={room} value={room}>
                   {/* {room} */}
@@ -258,7 +261,7 @@ export default function BookingForm(props) {
               ))}
             </Select>
           </div>
-          <div className="new-booking__control">
+          <div className="new-booking__control new-booking__control_readOnly">
             <label>No. of rooms</label>
             <input type="number" disabled value={enteredNumberOfRooms}></input>
           </div>
@@ -298,7 +301,7 @@ export default function BookingForm(props) {
               min="0"
             ></input>
           </div>
-          <div className="new-booking__control">
+          <div className="new-booking__control new-booking__control_readOnly">
             <label>Total bill</label>
             <input type="number" disabled value={enteredTotalBill}></input>
           </div>
@@ -338,7 +341,7 @@ export default function BookingForm(props) {
               min="0"
             ></input>
           </div>
-          <div className="new-booking__control">
+          <div className="new-booking__control new-booking__control_readOnly">
             <label>Pending amount</label>
             <input type="number" disabled value={enteredPendingAmount}></input>
           </div>

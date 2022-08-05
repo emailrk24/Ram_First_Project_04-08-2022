@@ -10,7 +10,6 @@ export default function CommonFilter(props) {
   return (
     <div className="common-filter">
       <div className="common-filter__control">
-        <label>Filter by month</label>
         <input
           type="month"
           value={props.defaultMonthYear}

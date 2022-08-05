@@ -11,18 +11,6 @@
   margin: 1rem 0;
 }
 
-.common-filter label {
-  font-weight: bold;
-  margin-bottom: 0.5rem;
-}
-
-.common-filter select {
-  font: inherit;
-  padding: 0.5rem 1rem;
-  font-weight: bold;
-  border-radius: 6px;
-}
-
 .common-filter input {
   font: inherit;
   padding: 0.5rem 1rem;

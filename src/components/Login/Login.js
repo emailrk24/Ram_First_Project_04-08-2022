@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Grid, Paper, Avatar, TextField, Button, Box } from "@mui/material";
+import { Grid, Paper, Avatar, TextField, Button } from "@mui/material";
 import Image from "./login_wallpaper.jpg";
 
 const styles = {

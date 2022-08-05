@@ -23,6 +23,10 @@ select,
   max-width: 100%;
 }
 
+.new-booking__control_readOnly input {
+  width: 10rem;
+}
+
 .new-booking__actions {
   text-align: center;
 }

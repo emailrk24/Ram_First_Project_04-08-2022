@@ -1,49 +1,9 @@
-import React, { useState, forwardRef } from "react";
-import MaterialTable, { MTableToolbar, MTableBodyRow } from "material-table";
-import { Button, Grid } from "@mui/material";
-import AddBox from "@material-ui/icons/AddBox";
-import ArrowDownward from "@material-ui/icons/ArrowDownward";
-import Check from "@material-ui/icons/Check";
-import ChevronLeft from "@material-ui/icons/ChevronLeft";
-import ChevronRight from "@material-ui/icons/ChevronRight";
-import Clear from "@material-ui/icons/Clear";
-import DeleteOutline from "@material-ui/icons/DeleteOutline";
-import Edit from "@material-ui/icons/Edit";
-import FilterList from "@material-ui/icons/FilterList";
-import FirstPage from "@material-ui/icons/FirstPage";
-import LastPage from "@material-ui/icons/LastPage";
-import Remove from "@material-ui/icons/Remove";
-import SaveAlt from "@material-ui/icons/SaveAlt";
-import Search from "@material-ui/icons/Search";
-import ViewColumn from "@material-ui/icons/ViewColumn";
+import React, { useState } from "react";
+import MaterialTable from "material-table";
+import { tableIcons } from "../Constants/TableIcons";
 import AddIcon from "@material-ui/icons/Add";
 import PopupDialog from "../Features/PopupDialog";
-import ExpenseForm from "../NewExpense/ExpenseForm";
-import { Divider, TablePagination } from "@material-ui/core";
-
-const tableIcons = {
-  Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-  Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-  Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-  Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
-  DetailPanel: forwardRef((props, ref) => (
-    <ChevronRight {...props} ref={ref} />
-  )),
-  Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-  Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-  Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-  FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-  LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-  NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
-  PreviousPage: forwardRef((props, ref) => (
-    <ChevronLeft {...props} ref={ref} />
-  )),
-  ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-  Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-  SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
-  ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-  ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
-};
+import ExpenseForm from "./ExpenseForm";
 
 export default function ExpenseEntries(props) {
   console.log("Im in ExpenseEntries");
@@ -65,8 +25,6 @@ export default function ExpenseEntries(props) {
     .reduce((accumulator, object) => {
       return accumulator + Number(object.amount);
     }, 0);
-
-  const a = 2 + 2;
 
   console.table(filteredExpenses);
 
@@ -93,9 +51,9 @@ export default function ExpenseEntries(props) {
     {
       title: "Amount",
       field: "amount",
-      align: "center",
-      type: "currency",
-      currencySetting: { currencyCode: "INR", minimumFractionDigits: 2 }
+      align: "center"
+      // type: "currency",
+      // currencySetting: { currencyCode: "INR", minimumFractionDigits: 2 }
     }
   ];
 
@@ -122,38 +80,25 @@ export default function ExpenseEntries(props) {
         data={filteredExpenses}
         icons={tableIcons}
         // title="Booking details"
-        components={{
-          Toolbar: (props) => (
-            <div
-              style={{
-                color: "#fff"
-              }}
-            >
-              <MTableToolbar {...props} />
-            </div>
-          ),
-          Row: (props) => (
-            <Grid style={{ backgroundColor: "#e8eaf5", display: "contents" }}>
-              <MTableBodyRow {...props} />
-            </Grid>
-          ),
-          Pagination: (props) => (
-            <>
-              <TablePagination {...props} />
-              {/* <Grid container style={{ padding: 0 }}> */}
-              {/* <Divider /> */}
-              {/* <Grid sm={2} item> */}
-              Summary
-              {/* </Grid>
-                <Grid sm={2} item> */}
-              Total expenses : {props.amount}
-              {console.log(props)}
-              {console.table(props)}
-              {/* </Grid> */}
-              {/* </Grid> */}
-            </>
-          )
-        }}
+        components={
+          {
+            // Toolbar: (props) => (
+            //   <div
+            //     style={{
+            //       color: "#fff"
+            //     }}
+            //   >
+            //     <MTableToolbar {...props} />
+            //   </div>
+            // ),
+            // Row: (props) => (
+            //   <Grid style={{ backgroundColor: "#e8eaf5", display: "contents" }}>
+            //     <MTableBodyRow {...props} />
+            //   </Grid>
+            // ),
+            // Pagination: (props) => <TablePagination {...props} />
+          }
+        }
         actions={[
           {
             icon: () => <AddIcon color="#9c27b0" />,
@@ -168,8 +113,9 @@ export default function ExpenseEntries(props) {
           }
         }}
         options={{
-          // showTitle: true,
+          showTitle: false,
           // doubleHorizontalScroll: true,
+          // tableLayout: "auto",
           showEmptyDataSourceMessage: true,
           sorting: true,
           search: true,
@@ -178,11 +124,17 @@ export default function ExpenseEntries(props) {
           searchFieldVariant: "standard",
           // filtering: true,
           paging: true,
-          pageSizeOptions: [20, 40, 100],
+          pageSizeOptions: [
+            10,
+            50,
+            100,
+            { value: filteredExpenses.length, label: "All" }
+          ],
           pageSize: 10,
+          emptyRowsWhenPaging: false,
           // paginationType: "stepped",
           // showFirstLastPageButtons: false,
-          // paginationPosition: "both",
+          // paginationPosition: "top",
           // exportButton: true,
           // exportAllData: true,
           // exportFileName: "TableData",
@@ -205,23 +157,14 @@ export default function ExpenseEntries(props) {
             index % 2 === 0 ? { background: "#FFEFD5" } : null,
           padding: "5rem",
           headerStyle: {
-            background: "#9c27b0", //"#ba68c8",
+            background: "#2e1534", //"#9c27b0", //"#ba68c8",
             color: "#fff",
-            fontWeight: "bold",
+            // fontWeight: "bold",
             fontFamily: "Noto Sans JP",
             fontSize: "0.80rem"
           }
         }}
       />
-      {/* <Button
-        className="new-item-button"
-        align="right"
-        variant="contained"
-        color="secondary"
-        onClick={() => setOpenPopup(true)}
-      >
-        Add New Expense
-      </Button> */}
       <PopupDialog
         title={"Add New Expense"}
         openPopup={openPopup}

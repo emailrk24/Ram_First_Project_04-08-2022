@@ -1,327 +1,57 @@
 import React, { useState } from "react";
+import { styled } from "@mui/material/styles";
 import BookingEntries from "./components/Bookings/BookingEntries";
 import ExpenseEntries from "./components/Expenses/ExpenseEntries";
+import AccountEntries from "./components/Accounts/AccountEntries";
 import CommonFilter from "./components/Features/CommonFilter";
 import Login from "./components/Login/Login";
 import "./styles.css";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
-import Divider from "@mui/material/Divider";
 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 
-const testBookingEntries = [
-  {
-    id: 9999,
-    checkInDate: "2022-08-15",
-    checkOutDate: "2022-08-19",
-    source: "App",
-    bookingId: "SK4 1LW",
-    roomNumber: "5A",
-    numberOfRooms: 2,
-    rentPerDay: 100,
-    ecAmount: 10,
-    lcAmount: 20,
-    otherBill: 30,
-    cashAtHotel: 100,
-    UPI: 0,
-    EDC: 0,
-    appPaidAmount: 40,
-    bookingStatus: "INHOUSE"
-  },
-  {
-    id: 9998,
-    checkInDate: "2022-08-20",
-    checkOutDate: "2022-08-25",
-    source: "WalkIn",
-    bookingId: "G28AJ",
-    roomNumber: "1A",
-    numberOfRooms: 1,
-    rentPerDay: 100,
-    ecAmount: 10,
-    lcAmount: 20,
-    otherBill: 30,
-    cashAtHotel: 100,
-    UPI: 0,
-    EDC: 0,
-    appPaidAmount: 40,
-    bookingStatus: "INHOUSE"
-  },
-  {
-    id: 8888,
-    checkInDate: "2022-08-20",
-    checkOutDate: "2022-08-25",
-    source: "WalkIn",
-    bookingId: "CF6AJ",
-    roomNumber: "1A",
-    numberOfRooms: 1,
-    rentPerDay: 100,
-    ecAmount: 10,
-    lcAmount: 20,
-    otherBill: 30,
-    cashAtHotel: 100,
-    UPI: 0,
-    EDC: 0,
-    appPaidAmount: 40,
-    bookingStatus: "INHOUSE"
-  },
-  {
-    id: 9001,
-    checkInDate: "2022-08-20",
-    checkOutDate: "2022-08-25",
-    source: "WalkIn",
-    bookingId: "641108",
-    roomNumber: "1A",
-    numberOfRooms: 1,
-    rentPerDay: 100,
-    ecAmount: 10,
-    lcAmount: 20,
-    otherBill: 30,
-    cashAtHotel: 100,
-    UPI: 0,
-    EDC: 0,
-    appPaidAmount: 40,
-    bookingStatus: "INHOUSE"
-  },
-  {
-    id: 9000,
-    checkInDate: "2022-08-27",
-    checkOutDate: "2022-08-30",
-    source: "App",
-    bookingId: "641108",
-    roomNumber: "10",
-    numberOfRooms: 2,
-    rentPerDay: 100,
-    ecAmount: 10,
-    lcAmount: 20,
-    otherBill: 30,
-    cashAtHotel: 100,
-    UPI: 0,
-    EDC: 0,
-    appPaidAmount: 40,
-    bookingStatus: "CANCEL"
-  },
-  {
-    id: 8999,
-    checkInDate: "2022-05-24",
-    checkOutDate: "2022-05-24",
-    source: "App",
-    bookingId: "SK4 1LW",
-    roomNumber: "5A",
-    numberOfRooms: 2,
-    rentPerDay: 100,
-    ecAmount: 10,
-    lcAmount: 20,
-    otherBill: 30,
-    cashAtHotel: 100,
-    UPI: 0,
-    EDC: 0,
-    appPaidAmount: 40,
-    bookingStatus: "INHOUSE"
-  }
-];
+import {
+  testBookingEntries,
+  testExpenseEntries
+} from "./components/Constants/TestDataSet";
 
-const testExpenseEntries = [
-  {
-    id: 999,
-    expenseType: "Property expense",
-    expenseDate: "2022-08-19",
-    description: "Water",
-    amount: "315"
+const StyledTabs = styled((props) => (
+  <Tabs
+    {...props}
+    TabIndicatorProps={{ children: <span className="MuiTabs-indicatorSpan" /> }}
+  />
+))({
+  "& .MuiTabs-indicator": {
+    display: "flex",
+    justifyContent: "center",
+    backgroundColor: "transparent"
   },
-  {
-    id: 998,
-    expenseType: "Staff welfare",
-    expenseDate: "2022-08-20",
-    description: "Manoj",
-    amount: "200"
-  },
-  {
-    id: 997,
-    expenseType: "Utensils",
-    expenseDate: "2022-05-20",
-    description: "Plates",
-    amount: "200"
-  },
-  {
-    id: 996,
-    expenseType: "Maintenance",
-    expenseDate: "2022-08-20",
-    description: "Cleaning",
-    amount: "200"
-  },
-  {
-    id: 999,
-    expenseType: "Property expense",
-    expenseDate: "2022-08-19",
-    description: "Water",
-    amount: "315"
-  },
-  {
-    id: 998,
-    expenseType: "Staff welfare",
-    expenseDate: "2022-08-20",
-    description: "Manoj",
-    amount: "200"
-  },
-  {
-    id: 997,
-    expenseType: "Utensils",
-    expenseDate: "2022-05-20",
-    description: "Plates",
-    amount: "200"
-  },
-  {
-    id: 996,
-    expenseType: "Maintenance",
-    expenseDate: "2022-08-20",
-    description: "Cleaning",
-    amount: "200"
-  },
-  {
-    id: 999,
-    expenseType: "Property expense",
-    expenseDate: "2022-08-19",
-    description: "Water",
-    amount: "315"
-  },
-  {
-    id: 998,
-    expenseType: "Staff welfare",
-    expenseDate: "2022-08-20",
-    description: "Manoj",
-    amount: "200"
-  },
-  {
-    id: 997,
-    expenseType: "Utensils",
-    expenseDate: "2022-05-20",
-    description: "Plates",
-    amount: "200"
-  },
-  {
-    id: 996,
-    expenseType: "Maintenance",
-    expenseDate: "2022-08-20",
-    description: "Cleaning",
-    amount: "200"
-  },
-  {
-    id: 999,
-    expenseType: "Property expense",
-    expenseDate: "2022-08-19",
-    description: "Water",
-    amount: "315"
-  },
-  {
-    id: 998,
-    expenseType: "Staff welfare",
-    expenseDate: "2022-08-20",
-    description: "Manoj",
-    amount: "200"
-  },
-  {
-    id: 997,
-    expenseType: "Utensils",
-    expenseDate: "2022-05-20",
-    description: "Plates",
-    amount: "200"
-  },
-  {
-    id: 996,
-    expenseType: "Maintenance",
-    expenseDate: "2022-08-20",
-    description: "Cleaning",
-    amount: "200"
-  },
-  {
-    id: 999,
-    expenseType: "Property expense",
-    expenseDate: "2022-08-19",
-    description: "Water",
-    amount: "315"
-  },
-  {
-    id: 998,
-    expenseType: "Staff welfare",
-    expenseDate: "2022-08-20",
-    description: "Manoj",
-    amount: "200"
-  },
-  {
-    id: 997,
-    expenseType: "Utensils",
-    expenseDate: "2022-05-20",
-    description: "Plates",
-    amount: "200"
-  },
-  {
-    id: 996,
-    expenseType: "Maintenance",
-    expenseDate: "2022-08-20",
-    description: "Cleaning",
-    amount: "200"
-  },
-  {
-    id: 999,
-    expenseType: "Property expense",
-    expenseDate: "2022-08-19",
-    description: "Water",
-    amount: "315"
-  },
-  {
-    id: 998,
-    expenseType: "Staff welfare",
-    expenseDate: "2022-08-20",
-    description: "Manoj",
-    amount: "200"
-  },
-  {
-    id: 997,
-    expenseType: "Utensils",
-    expenseDate: "2022-05-20",
-    description: "Plates",
-    amount: "200"
-  },
-  {
-    id: 996,
-    expenseType: "Maintenance",
-    expenseDate: "2022-08-20",
-    description: "Cleaning",
-    amount: "200"
-  },
-  {
-    id: 999,
-    expenseType: "Property expense",
-    expenseDate: "2022-08-19",
-    description: "Water",
-    amount: "315"
-  },
-  {
-    id: 998,
-    expenseType: "Staff welfare",
-    expenseDate: "2022-08-20",
-    description: "Manoj",
-    amount: "200"
-  },
-  {
-    id: 997,
-    expenseType: "Utensils",
-    expenseDate: "2022-05-20",
-    description: "Plates",
-    amount: "200"
-  },
-  {
-    id: 996,
-    expenseType: "Maintenance",
-    expenseDate: "2022-08-20",
-    description: "Cleaning",
-    amount: "200"
+  "& .MuiTabs-indicatorSpan": {
+    // maxWidth: 40,
+    // width: "100%",
+    backgroundColor: "#635ee7"
   }
-];
+});
+
+const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
+  ({ theme }) => ({
+    textTransform: "none",
+    fontWeight: theme.typography.fontWeightRegular,
+    fontSize: theme.typography.pxToRem(15),
+    marginRight: theme.spacing(1),
+    color: "rgba(255, 255, 255, 0.7)",
+    "&.Mui-selected": {
+      color: "#fff"
+    },
+    "&.Mui-focusVisible": {
+      backgroundColor: "rgba(100, 95, 228, 0.32)"
+    }
+  })
+);
 
 export default function App() {
   const currentYear = new Date().getFullYear();
@@ -353,7 +83,6 @@ export default function App() {
       return [expenseDetail, ...prevExpenses];
     });
     console.table(expenses);
-    // props.setOpenPopup(false);
   };
 
   const [tabValue, setTabValue] = useState("1");
@@ -365,43 +94,43 @@ export default function App() {
   return (
     <div className="Appppppp">
       {/* <Login /> */}
-      {/* <div style={{ fontSize: "2rem" }} align="center">
-        Hotel - Expense Management Platform
-      </div>
-      <Divider /> */}
       <Box
-        sx={{ width: "100%", fontFamily: "Noto Sans JP", fontSize: "0.80rem" }}
+        sx={{
+          width: "100%",
+          fontFamily: "Noto Sans JP",
+          fontSize: "0.80rem",
+          borderRadius: "12px",
+          bgcolor: "#2e1534" //"#471254"
+        }}
       >
-        <Tabs
+        <StyledTabs
           value={tabValue}
           onChange={handleTabChange}
           variant="fullWidth"
-          textColor="secondary"
-          indicatorColor="secondary"
         >
-          <Tab
+          <StyledTab
             value="1"
             label={
               <div>
                 <CalendarMonthIcon />
-                Bookings
+                BOOKINGS
               </div>
             }
           />
-          <Tab
+          <StyledTab
             value="2"
             label={
               <div>
-                <AccountBalanceWalletIcon /> Expenses
+                <AccountBalanceWalletIcon /> EXPENSES
               </div>
             }
           />
-          <Tab
+          <StyledTab
             value="3"
             label={
               <div>
                 <MenuBookIcon />
-                Accounts
+                ACCOUNTS
               </div>
             }
           />
@@ -409,27 +138,29 @@ export default function App() {
             defaultMonthYear={filteredMonthYear}
             onChangeFilter={filterChangeHandler}
           />
-        </Tabs>
+        </StyledTabs>
+        <Box sx={{ p: 0.5 }} />
       </Box>
-      <TabPanel value={tabValue} index={"1"}>
-        <BookingEntries
-          bookingEntries={bookings}
-          filteredMonthYear={filteredMonthYear}
-          onSaveBooking={addBookingHandler}
-        />
-        {/* <NewBooking onSaveBooking={addBookingHandler} /> */}
-      </TabPanel>
-      <TabPanel value={tabValue} index={"2"}>
-        <ExpenseEntries
-          expenseEntries={expenses}
-          filteredMonthYear={filteredMonthYear}
-          onSaveExpense={addExpenseHandler}
-        />
-        {/* <NewExpense onSaveExpense={addExpenseHandler} /> */}
-      </TabPanel>
-      <TabPanel value={tabValue} index={"3"}>
-        Account details
-      </TabPanel>
+      <div>
+        <TabPanel value={tabValue} index={"1"}>
+          <BookingEntries
+            bookingEntries={bookings}
+            filteredMonthYear={filteredMonthYear}
+            onSaveBooking={addBookingHandler}
+          />
+        </TabPanel>
+        <TabPanel value={tabValue} index={"2"}>
+          <ExpenseEntries
+            expenseEntries={expenses}
+            filteredMonthYear={filteredMonthYear}
+            onSaveExpense={addExpenseHandler}
+          />
+        </TabPanel>
+        <TabPanel value={tabValue} index={"3"}>
+          Account details...
+          <AccountEntries />
+        </TabPanel>
+      </div>
     </div>
   );
 }
