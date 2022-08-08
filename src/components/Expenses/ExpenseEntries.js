@@ -79,26 +79,7 @@ export default function ExpenseEntries(props) {
         columns={columns}
         data={filteredExpenses}
         icons={tableIcons}
-        // title="Booking details"
-        components={
-          {
-            // Toolbar: (props) => (
-            //   <div
-            //     style={{
-            //       color: "#fff"
-            //     }}
-            //   >
-            //     <MTableToolbar {...props} />
-            //   </div>
-            // ),
-            // Row: (props) => (
-            //   <Grid style={{ backgroundColor: "#e8eaf5", display: "contents" }}>
-            //     <MTableBodyRow {...props} />
-            //   </Grid>
-            // ),
-            // Pagination: (props) => <TablePagination {...props} />
-          }
-        }
+        // title="Expense details"
         actions={[
           {
             icon: () => <AddIcon color="#9c27b0" />,

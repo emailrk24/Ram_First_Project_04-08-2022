@@ -397,3 +397,41 @@ export const testExpenseEntries = [
     amount: "200"
   }
 ];
+export const testStaffEntries = [
+  {
+    id: 996,
+    staffName: "xxx",
+    calendarMonthYear: "2022-08",
+    numberOfCalendarDays: 31,
+    fixedSalary: "15000",
+    numberOfLeaveDays: 2,
+    numberOfWorkingDays: 29,
+    totalSalary: 14000,
+    advanceSalary: 4000,
+    balanceSalary: 10000
+  },
+  {
+    id: 997,
+    staffName: "yyy",
+    calendarMonthYear: "2022-08",
+    numberOfCalendarDays: 31,
+    fixedSalary: "12000",
+    numberOfLeaveDays: 2,
+    numberOfWorkingDays: 29,
+    totalSalary: 12000,
+    advanceSalary: 4000,
+    balanceSalary: 8000
+  },
+  {
+    id: 998,
+    staffName: "zzz",
+    calendarMonthYear: "2022-08",
+    numberOfCalendarDays: 31,
+    fixedSalary: "10000",
+    numberOfLeaveDays: 15,
+    numberOfWorkingDays: 29,
+    totalSalary: 8000,
+    advanceSalary: 4000,
+    balanceSalary: 4000
+  }
+];

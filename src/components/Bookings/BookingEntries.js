@@ -136,10 +136,6 @@ export default function BookingEntries(props) {
         columns={columns}
         data={filteredBookings}
         icons={tableIcons}
-        // title="Booking details"
-        // components={{
-        //   Pagination: (props) => <TablePagination {...props} />
-        // }}
         actions={[
           {
             icon: () => <AddIcon color="#9c27b0" />,

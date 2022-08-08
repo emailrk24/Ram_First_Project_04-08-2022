@@ -3,12 +3,14 @@ import { styled } from "@mui/material/styles";
 import BookingEntries from "./components/Bookings/BookingEntries";
 import ExpenseEntries from "./components/Expenses/ExpenseEntries";
 import AccountEntries from "./components/Accounts/AccountEntries";
+import StaffEntries from "./components/Staffs/StaffEntries";
 import CommonFilter from "./components/Features/CommonFilter";
 import Login from "./components/Login/Login";
 import "./styles.css";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
+import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -16,7 +18,8 @@ import Box from "@mui/material/Box";
 
 import {
   testBookingEntries,
-  testExpenseEntries
+  testExpenseEntries,
+  testStaffEntries
 } from "./components/Constants/TestDataSet";
 
 const StyledTabs = styled((props) => (
@@ -31,8 +34,8 @@ const StyledTabs = styled((props) => (
     backgroundColor: "transparent"
   },
   "& .MuiTabs-indicatorSpan": {
-    // maxWidth: 40,
-    // width: "100%",
+    maxWidth: 40,
+    width: "100%",
     backgroundColor: "#635ee7"
   }
 });
@@ -40,8 +43,9 @@ const StyledTabs = styled((props) => (
 const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
   ({ theme }) => ({
     textTransform: "none",
-    fontWeight: theme.typography.fontWeightRegular,
-    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightBold,
+    fontFamily: "Noto Sans JP",
+    fontSize: theme.typography.pxToRem(16),
     marginRight: theme.spacing(1),
     color: "rgba(255, 255, 255, 0.7)",
     "&.Mui-selected": {
@@ -68,6 +72,7 @@ export default function App() {
 
   const [bookings, setBookings] = useState(testBookingEntries);
   const [expenses, setExpenses] = useState(testExpenseEntries);
+  const [staffDetails, setStaffDetails] = useState(testStaffEntries);
 
   const addBookingHandler = (bookingDetail) => {
     setBookings((prevBookings) => {
@@ -76,13 +81,19 @@ export default function App() {
   };
 
   const addExpenseHandler = (expenseDetail) => {
-    console.log(
-      "Im in addExpenseHandler : " + JSON.stringify(expenseDetail, null, 4)
-    );
     setExpenses((prevExpenses) => {
       return [expenseDetail, ...prevExpenses];
     });
-    console.table(expenses);
+  };
+
+  const addStaffDetailHandler = (staffDetail) => {
+    console.log("staffDetail : " + staffDetail);
+    console.log("staffDetail : " + JSON.stringify(staffDetail, null, 4));
+    setStaffDetails((prevStaffDetails) => {
+      return [staffDetail, ...prevStaffDetails];
+    });
+    console.log("staffDetails : " + staffDetails);
+    console.log("staffDetails : " + JSON.stringify(staffDetails, null, 4));
   };
 
   const [tabValue, setTabValue] = useState("1");
@@ -112,8 +123,7 @@ export default function App() {
             value="1"
             label={
               <div>
-                <CalendarMonthIcon />
-                BOOKINGS
+                <CalendarMonthIcon /> BOOKINGS
               </div>
             }
           />
@@ -129,8 +139,15 @@ export default function App() {
             value="3"
             label={
               <div>
-                <MenuBookIcon />
-                ACCOUNTS
+                <PeopleAltIcon /> STAFF MANAGEMENT
+              </div>
+            }
+          />
+          <StyledTab
+            value="4"
+            label={
+              <div>
+                <MenuBookIcon /> ACCOUNTS
               </div>
             }
           />
@@ -157,6 +174,13 @@ export default function App() {
           />
         </TabPanel>
         <TabPanel value={tabValue} index={"3"}>
+          <StaffEntries
+            staffEntries={staffDetails}
+            filteredMonthYear={filteredMonthYear}
+            onSaveStaffDetail={addStaffDetailHandler}
+          />
+        </TabPanel>
+        <TabPanel value={tabValue} index={"4"}>
           Account details...
           <AccountEntries />
         </TabPanel>
