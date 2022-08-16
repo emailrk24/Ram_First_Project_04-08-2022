@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import MaterialTable from "material-table";
 import { tableIcons } from "../Constants/TableIcons";
 import AddIcon from "@material-ui/icons/Add";
+import Button from "@mui/material/Button";
 import PopupDialog from "../Features/PopupDialog";
 import ExpenseForm from "./ExpenseForm";
 
@@ -38,18 +39,26 @@ export default function ExpenseEntries(props) {
   const [tableData, setTableData] = useState(filteredExpenses);
 
   const columns = [
-    { title: "S.No", field: "id", align: "left" },
+    { title: <font color="#fff">S.No</font>, field: "id", align: "left" },
     {
-      title: "Expense date",
+      title: <font color="#fff">Expense date</font>,
       field: "expenseDate",
       align: "left",
       type: "date",
       dateSetting: { locale: "en-GB" }
     },
-    { title: "Expense type", field: "expenseType", align: "left" },
-    { title: "Description", field: "description", align: "left" },
     {
-      title: "Amount",
+      title: <font color="#fff">Expense type</font>,
+      field: "expenseType",
+      align: "left"
+    },
+    {
+      title: <font color="#fff">Description</font>,
+      field: "description",
+      align: "left"
+    },
+    {
+      title: <font color="#fff">Amount</font>,
       field: "amount",
       align: "center"
       // type: "currency",
@@ -63,7 +72,7 @@ export default function ExpenseEntries(props) {
     );
     const expenseDetail = {
       ...enteredExpenseDetail,
-      id: Math.round(Math.random() * (9997 - 9000) + 9000)
+      id: Math.round(Math.random() * (8099 - 8000) + 8000)
     };
     props.onSaveExpense(expenseDetail);
     setOpenPopup(false);
@@ -82,7 +91,23 @@ export default function ExpenseEntries(props) {
         // title="Expense details"
         actions={[
           {
-            icon: () => <AddIcon color="#9c27b0" />,
+            // icon: () => <AddIcon color="#9c27b0" />,
+            icon: () => (
+              <Button
+                variant="contained"
+                sx={{
+                  textTransform: "none",
+                  borderRadius: "12px",
+                  backgroundColor: "#40005d",
+                  "&:hover": {
+                    backgroundColor: "#510674"
+                  }
+                }}
+                startIcon={<AddIcon />}
+              >
+                Add Expense
+              </Button>
+            ),
             tooltip: "Add expense",
             isFreeAction: true,
             onClick: (event) => setOpenPopup(true)
@@ -129,7 +154,7 @@ export default function ExpenseEntries(props) {
           //   // color:"primary"
           // }),
           // grouping: true,
-          columnsButton: true,
+          columnsButton: false,
           cellStyle: {
             fontFamily: "Noto Sans JP",
             fontSize: "0.80rem"

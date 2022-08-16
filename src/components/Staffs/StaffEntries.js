@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import MaterialTable from "material-table";
 import { tableIcons } from "../Constants/TableIcons";
 import AddIcon from "@material-ui/icons/Add";
+import Button from "@mui/material/Button";
 import PopupDialog from "../Features/PopupDialog";
 import StaffForm from "./StaffForm";
+// import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+// import { purple } from "@mui/material/colors";
+
 // import { TablePagination, Grid, Typography, Divider } from "@material-ui/core";
 
 export default function StaffEntries(props) {
@@ -28,40 +32,44 @@ export default function StaffEntries(props) {
   const [tableData, setTableData] = useState(filteredStaffDetails);
 
   const columns = [
-    { title: "S.No", field: "id", align: "left" },
+    { title: <font color="#fff">S.No</font>, field: "id", align: "left" },
     {
-      title: "Staff Name",
+      title: <font color="#fff">Staff Name</font>,
       field: "staffName",
       align: "left"
     },
     {
-      title: "No. of Calendar days",
+      title: <font color="#fff">No. of Calendar days</font>,
       field: "numberOfCalendarDays",
       align: "left"
     },
-    { title: "Fixed Salary", field: "fixedSalary", align: "left" },
     {
-      title: "No. of Leave days",
+      title: <font color="#fff">Fixed Salary</font>,
+      field: "fixedSalary",
+      align: "left"
+    },
+    {
+      title: <font color="#fff">No. of Leave days</font>,
       field: "numberOfLeaveDays",
       align: "left"
     },
     {
-      title: "No. of Working days",
+      title: <font color="#fff">No. of Working days</font>,
       field: "numberOfWorkingDays",
       align: "left"
     },
     {
-      title: "Total Salary",
+      title: <font color="#fff">Total Salary</font>,
       field: "totalSalary",
       align: "left"
     },
     {
-      title: "Advance Salary",
+      title: <font color="#fff">Advance Salary</font>,
       field: "advanceSalary",
       align: "left"
     },
     {
-      title: "Balance Salary",
+      title: <font color="#fff">Balance Salary</font>,
       field: "balanceSalary",
       align: "left"
     }
@@ -73,7 +81,7 @@ export default function StaffEntries(props) {
     );
     const staffDetail = {
       ...enteredStaffDetail,
-      id: Math.round(Math.random() * (9997 - 9000) + 9000)
+      id: Math.round(Math.random() * (8099 - 8000) + 8000)
     };
     props.onSaveStaffDetail(staffDetail);
     setOpenPopup(false);
@@ -126,7 +134,23 @@ export default function StaffEntries(props) {
         // }}
         actions={[
           {
-            icon: () => <AddIcon color="#9c27b0" />,
+            // icon: () => <AddIcon color="#9c27b0" />,
+            icon: () => (
+              <Button
+                variant="contained"
+                sx={{
+                  textTransform: "none",
+                  borderRadius: "12px",
+                  backgroundColor: "#40005d",
+                  "&:hover": {
+                    backgroundColor: "#510674"
+                  }
+                }}
+                startIcon={<AddIcon />}
+              >
+                Add Staff
+              </Button>
+            ),
             tooltip: "Add Staff",
             isFreeAction: true,
             onClick: (event) => setOpenPopup(true)
@@ -143,7 +167,7 @@ export default function StaffEntries(props) {
           // tableLayout: "auto",
           showEmptyDataSourceMessage: true,
           sorting: true,
-          search: false,
+          search: true,
           // searchFieldAlignment: "right",
           // searchAutoFocus: false,
           // searchFieldVariant: "standard",
@@ -163,8 +187,8 @@ export default function StaffEntries(props) {
           // exportButton: true,
           // exportAllData: true,
           // exportFileName: "TableData",
-          addRowPosition: "first",
-          actionsColumnIndex: -1,
+          // addRowPosition: "first",
+          // actionsColumnIndex: -1,
           // selection: true,
           // showSelectAllCheckbox: false,
           // showTextRowsSelected: false,
@@ -173,7 +197,7 @@ export default function StaffEntries(props) {
           //   // color:"primary"
           // }),
           // grouping: true,
-          columnsButton: true,
+          columnsButton: false,
           cellStyle: {
             fontFamily: "Noto Sans JP",
             fontSize: "0.80rem"

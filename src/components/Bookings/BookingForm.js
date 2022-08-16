@@ -347,11 +347,14 @@ export default function BookingForm(props) {
           </div>
           <div className="new-booking__control">
             <label>Booking status</label>
-            <input
-              type="text"
+            <select
               value={enteredBookingStatus}
               onChange={bookingStatusChangeHandler}
-            ></input>
+            >
+              <option value="Pending">Pending</option>
+              <option value="CheckOut">CheckOut</option>
+              <option value="InHouse">InHouse</option>
+            </select>
           </div>
         </div>
         <div className="new-booking__actions">

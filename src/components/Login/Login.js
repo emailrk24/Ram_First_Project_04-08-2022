@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Grid, Paper, Avatar, TextField, Button } from "@mui/material";
 import Image from "./login_wallpaper.jpg";
+import { Route, Link, BrowserRouter, Routes } from 'react-router-dom';
+// import App from "../../App";
+import AppNew from "./AppNew";
+
 
 const styles = {
   divContainer: {
@@ -53,6 +57,18 @@ export default function Login() {
             >
               Sign in
             </Button>
+               < BrowserRouter >
+      <div>
+         <ul>
+            <li>
+               <Link to="/mainpage">MainPage</Link>
+            </li>
+         </ul>
+         <Routes>
+         <Route path="/mainpage" component={AppNew} />
+         </Routes>
+      </div>
+   </ BrowserRouter >
           </Grid>
         </Paper>
       </Grid>

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
-import BookingEntries from "./components/Bookings/BookingEntries";
-import ExpenseEntries from "./components/Expenses/ExpenseEntries";
-import AccountEntries from "./components/Accounts/AccountEntries";
-import StaffEntries from "./components/Staffs/StaffEntries";
-import CommonFilter from "./components/Features/CommonFilter";
-import "./styles.css";
+import BookingEntries from "../Bookings/BookingEntries";
+import ExpenseEntries from "../Expenses/ExpenseEntries";
+import AccountEntries from "../Accounts/AccountEntries";
+import StaffEntries from "../Staffs/StaffEntries";
+import CommonFilter from "../Features/CommonFilter";
+// import "./styles.css";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
@@ -19,7 +19,7 @@ import {
   testBookingEntries,
   testExpenseEntries,
   testStaffEntries
-} from "./components/Constants/TestDataSet";
+} from "../Constants/TestDataSet";
 
 const StyledTabs = styled((props) => (
   <Tabs
@@ -56,7 +56,7 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
   })
 );
 
-export default function App() {
+export default function AppNew() {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth() + 1;
   const currentMonthYear =
@@ -105,7 +105,7 @@ export default function App() {
           fontFamily: "Noto Sans JP",
           fontSize: "0.80rem",
           borderRadius: "12px",
-          bgcolor: "#2e1534" // "#1976d2" //"#471254"
+          bgcolor: "#2e1534" //"#471254"
         }}
       >
         <StyledTabs

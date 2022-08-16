@@ -34,7 +34,15 @@ export const tableIcons = {
   )),
   ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
   Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-  SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
+  SortArrow: forwardRef((props, ref) => (
+    <ArrowDownward
+      style={{
+        color: "#fff"
+      }}
+      {...props}
+      ref={ref}
+    />
+  )),
   ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };

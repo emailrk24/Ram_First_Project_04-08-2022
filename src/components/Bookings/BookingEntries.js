@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import MaterialTable from "material-table";
 import { tableIcons } from "../Constants/TableIcons";
 import AddIcon from "@material-ui/icons/Add";
+import Button from "@mui/material/Button";
 import PopupDialog from "../Features/PopupDialog";
 import BookingForm from "./BookingForm";
 
 export default function BookingEntries(props) {
   const [openPopup, setOpenPopup] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+
   let yearMonth = props.filteredMonthYear.split("-");
   const filteredBookings = props.bookingEntries.filter(
     (booking) =>
@@ -17,104 +20,116 @@ export default function BookingEntries(props) {
   const columns = [
     { title: "S.No", field: "id", align: "left" },
     {
-      title: "Check-in",
+      title: <font color="#fff">Check-in</font>,
       field: "checkInDate",
       align: "left",
       type: "date",
       dateSetting: { locale: "en-GB" }
     },
     {
-      title: "Check-out",
+      title: <font color="#fff">Check-out</font>,
       field: "checkOutDate",
       align: "left",
       type: "date",
       dateSetting: { locale: "en-GB" }
     },
-    { title: "Source", field: "source", align: "left" },
-    { title: "Booking Ref.", field: "bookingId", align: "left" },
+    { title: <font color="#fff">Source</font>, field: "source", align: "left" },
     {
-      title: "Room No.",
+      title: <font color="#fff">Booking Ref.</font>,
+      field: "bookingId",
+      align: "left"
+    },
+    {
+      title: <font color="#fff">Room No.</font>,
       field: "roomNumber",
       align: "left",
       render: (rowData) => <div>{rowData.roomNumber.toString()}</div>
     },
-    { title: "No. of rooms", field: "numberOfRooms", align: "left" },
     {
-      title: "No. of days",
+      title: <font color="#fff">No. of rooms</font>,
+      field: "numberOfRooms",
+      align: "left"
+    },
+    {
+      title: <font color="#fff">No. of days</font>,
       field: "numberOfDays",
       align: "left"
     },
     {
-      title: "Rent per day",
+      title: <font color="#fff">Rent per day</font>,
       field: "rentPerDay",
       align: "left"
-      // type: "currency",
       // currencySetting: { currencyCode: "INR", minimumFractionDigits: 2 }
     },
     {
-      title: "EC amt",
+      title: <font color="#fff">EC amt</font>,
       field: "ecAmount",
       align: "left"
-      // type: "currency",
+      // type: "currency"
       // currencySetting: { currencyCode: "INR", minimumFractionDigits: 2 }
     },
     {
-      title: "LC amt",
+      title: <font color="#fff">LC amt</font>,
       field: "lcAmount",
-      align: "left"
-      // type: "currency",
+      align: "left",
+      type: "number"
+      // type: "currency"
       // currencySetting: { currencyCode: "INR", minimumFractionDigits: 2 }
     },
     {
-      title: "Other bill",
+      title: <font color="#fff">Other bill</font>,
       field: "otherBill",
       align: "left"
       // type: "currency",
       // currencySetting: { currencyCode: "INR", minimumFractionDigits: 2 }
     },
     {
-      title: "Total bill",
+      title: <font color="#fff">Total bill</font>,
       field: "totalBill",
       align: "left"
       // type: "currency",
       // currencySetting: { currencyCode: "INR", minimumFractionDigits: 2 }
     },
     {
-      title: "Cash at hotel",
+      title: <font color="#fff">Cash at hotel</font>,
       field: "cashAtHotel",
       align: "left"
       // type: "currency",
       // currencySetting: { currencyCode: "INR", minimumFractionDigits: 2 }
     },
     {
-      title: "UPI",
+      title: <font color="#fff">UPI</font>,
       field: "UPI",
       align: "left"
       // type: "currency"
       // currencySetting: { currencyCode: "INR", minimumFractionDigits: 2 }
     },
     {
-      title: "EDC",
+      title: <font color="#fff">EDC</font>,
       field: "EDC",
       align: "left"
       // type: "currency"
       // currencySetting: { currencyCode: "INR", minimumFractionDigits: 2 }
     },
     {
-      title: "App paid amt",
+      title: <font color="#fff">App paid amt</font>,
       field: "appPaidAmount",
       align: "left"
       // type: "currency",
       // currencySetting: { currencyCode: "INR", minimumFractionDigits: 2 }
     },
     {
-      title: "Pending amt",
+      title: <font color="#fff">Pending amt</font>,
       field: "pendingAmount",
       align: "left"
       // type: "currency",
       // currencySetting: { currencyCode: "INR", minimumFractionDigits: 2 }
     },
-    { title: "Booking status", field: "bookingStatus", align: "left" }
+    {
+      title: <font color="#fff">Booking status</font>,
+      field: "bookingStatus",
+      align: "left"
+    }
   ];
   const addBookingHandler = (enteredBookingDetail) => {
     console.log(
@@ -122,7 +137,7 @@ export default function BookingEntries(props) {
     );
     const bookingDetail = {
       ...enteredBookingDetail,
-      id: Math.round(Math.random() * (9997 - 9000) + 9000)
+      id: Math.round(Math.random() * (8099 - 8000) + 8000)
     };
     props.onSaveBooking(bookingDetail);
     setOpenPopup(false);
@@ -130,6 +145,7 @@ export default function BookingEntries(props) {
   const cancelBookingHandler = () => {
     setOpenPopup(false);
   };
+
   return (
     <div>
       <MaterialTable
@@ -138,7 +154,23 @@ export default function BookingEntries(props) {
         icons={tableIcons}
         actions={[
           {
-            icon: () => <AddIcon color="#9c27b0" />,
+            // icon: () => <AddIcon color="#9c27b0" />,
+            icon: () => (
+              <Button
+                variant="contained"
+                sx={{
+                  textTransform: "none",
+                  borderRadius: "12px",
+                  backgroundColor: "#40005d",
+                  "&:hover": {
+                    backgroundColor: "#510674"
+                  }
+                }}
+                startIcon={<AddIcon />}
+              >
+                Add Booking
+              </Button>
+            ),
             tooltip: "Add New Booking",
             isFreeAction: true,
             onClick: (event) => setOpenPopup(true)
@@ -149,6 +181,9 @@ export default function BookingEntries(props) {
             emptyDataSourceMessage: "No bookings to display"
           }
         }}
+        onRowClick={(evt, selectedRow) =>
+          setSelectedRow(selectedRow.tableData.id)
+        }
         options={{
           showTitle: false,
           // tableLayout: "auto",
@@ -183,17 +218,21 @@ export default function BookingEntries(props) {
           //   // color:"primary"
           // }),
           // grouping: true,
-          columnsButton: true,
+          columnsButton: false,
           cellStyle: {
             fontFamily: "Noto Sans JP",
             fontSize: "0.8rem",
             padding: "8px 6px 8px 2px"
           },
-          rowStyle: (data, index) =>
-            index % 2 === 0 ? { background: "#FFEFD5" } : null,
-          padding: "5rem",
+          rowStyle: (data, index) => {
+            return {
+              background: index % 2 === 0 ? "#FFEFD5" : null,
+              padding: "5rem"
+              // color: selectedRow === index ? "#FFC0CB" : "#000",
+            };
+          },
           headerStyle: {
-            background: "#2e1534", //"#9c27b0", //"#ba68c8",
+            background: "#2e1534", //"#1976d2", //"#9c27b0", //"#ba68c8",
             color: "#fff",
             // fontWeight: "bold",
             fontFamily: "Noto Sans JP",
