@@ -21,12 +21,6 @@ export default function ExpenseEntries(props) {
       new Date(expense.expenseDate).getFullYear() === Number(yearMonth[0])
   );
 
-  const propertyExpense = filteredExpenses
-    .filter((expense) => expense.expenseType === "Property Expense")
-    .reduce((accumulator, object) => {
-      return accumulator + Number(object.amount);
-    }, 0);
-
   console.table(filteredExpenses);
 
   const [id, setId] = useState(props.id);

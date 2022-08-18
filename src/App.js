@@ -91,7 +91,7 @@ export default function App() {
     });
   };
 
-  const [tabValue, setTabValue] = useState("1");
+  const [tabValue, setTabValue] = useState("4");
 
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -175,8 +175,12 @@ export default function App() {
           />
         </TabPanel>
         <TabPanel value={tabValue} index={"4"}>
-          Account details...
-          <AccountEntries />
+          <AccountEntries
+            filteredMonthYear={filteredMonthYear}
+            bookingEntries={bookings}
+            expenseEntries={expenses}
+            staffEntries={staffDetails}
+          />
         </TabPanel>
       </div>
     </div>

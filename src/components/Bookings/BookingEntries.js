@@ -24,14 +24,16 @@ export default function BookingEntries(props) {
       field: "checkInDate",
       align: "left",
       type: "date",
-      dateSetting: { locale: "en-GB" }
+      dateSetting: { locale: "en-GB" },
+      filtering: "true"
     },
     {
       title: <font color="#fff">Check-out</font>,
       field: "checkOutDate",
       align: "left",
       type: "date",
-      dateSetting: { locale: "en-GB" }
+      dateSetting: { locale: "en-GB" },
+      filtering: "true"
     },
     { title: <font color="#fff">Source</font>, field: "source", align: "left" },
     {
@@ -192,7 +194,7 @@ export default function BookingEntries(props) {
           searchFieldAlignment: "right",
           searchAutoFocus: false,
           searchFieldVariant: "standard",
-          // filtering: true,
+          filtering: false,
           paging: true,
           pageSizeOptions: [
             10,
