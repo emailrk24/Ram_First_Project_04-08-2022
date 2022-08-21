@@ -12,10 +12,12 @@
     "@mui/icons-material": "5.8.4",
     "@mui/material": "5.9.1",
     "@mui/styles": "5.9.1",
+    "filefy": "0.1.11",
     "material-table": "1.69.0",
     "react": "18.0.0",
     "react-dom": "18.0.0",
-    "react-router-dom": "6.3.0"
+    "react-router-dom": "6.3.0",
+    "xlsx": "0.17.0"
   },
   "devDependencies": {
     "@babel/runtime": "7.13.8",

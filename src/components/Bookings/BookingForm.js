@@ -212,7 +212,9 @@ export default function BookingForm(props) {
             <label>Source</label>
             <select value={enteredSource} onChange={sourceChangeHandler}>
               <option value="App">App</option>
-              <option value="WalkIn">WalkIn</option>
+              <option value="Walk In">Walk In</option>
+              <option value="Travel Agent">Travel Agent</option>
+              <option value="Corporate">Corporate</option>
             </select>
           </div>
           <div className="new-booking__control">
@@ -352,8 +354,11 @@ export default function BookingForm(props) {
               onChange={bookingStatusChangeHandler}
             >
               <option value="Pending">Pending</option>
+              <option value="CheckIn">CheckIn</option>
               <option value="CheckOut">CheckOut</option>
+              <option value="No Show">No Show</option>
               <option value="InHouse">InHouse</option>
+              <option value="Cancelled">Cancelled</option>
             </select>
           </div>
         </div>

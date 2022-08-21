@@ -5,10 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import Button from "@mui/material/Button";
 import PopupDialog from "../Features/PopupDialog";
 import StaffForm from "./StaffForm";
-// import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
-// import { purple } from "@mui/material/colors";
-
-// import { TablePagination, Grid, Typography, Divider } from "@material-ui/core";
+import { CsvBuilder } from "filefy";
 
 export default function StaffEntries(props) {
   console.log(
@@ -32,7 +29,7 @@ export default function StaffEntries(props) {
   const [tableData, setTableData] = useState(filteredStaffDetails);
 
   const columns = [
-    { title: <font color="#fff">S.No</font>, field: "id", align: "left" },
+    { title: <font color="#fff">S.No.</font>, field: "id", align: "left" },
     {
       title: <font color="#fff">Staff Name</font>,
       field: "staffName",
@@ -159,6 +156,10 @@ export default function StaffEntries(props) {
         localization={{
           body: {
             emptyDataSourceMessage: "No staff details to display"
+          },
+          toolbar: {
+            exportCSVName: "Download",
+            exportTitle: "Download"
           }
         }}
         options={{
@@ -184,9 +185,24 @@ export default function StaffEntries(props) {
           // paginationType: "stepped",
           // showFirstLastPageButtons: false,
           // paginationPosition: "top",
-          // exportButton: true,
-          // exportAllData: true,
+          exportButton: { csv: true, pdf: false },
+          exportAllData: true,
           // exportFileName: "TableData",
+          exportCsv: (data, columns) => {
+            const columnTitles = data.map(
+              (columnDef) => columnDef.title.props.children
+            );
+            const csvData = columns.map((rowData) =>
+              data.map((columnDef) => rowData[columnDef.field])
+            );
+            const builder = new CsvBuilder(
+              `StaffDetails_${props.filteredMonthYear}.csv`
+            )
+              .setColumns(columnTitles)
+              .addRows(csvData)
+              .exportFile();
+            return builder;
+          },
           // addRowPosition: "first",
           // actionsColumnIndex: -1,
           // selection: true,

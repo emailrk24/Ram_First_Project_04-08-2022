@@ -5,6 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import Button from "@mui/material/Button";
 import PopupDialog from "../Features/PopupDialog";
 import BookingForm from "./BookingForm";
+import { CsvBuilder } from "filefy";
 
 export default function BookingEntries(props) {
   const [openPopup, setOpenPopup] = useState(false);
@@ -18,22 +19,20 @@ export default function BookingEntries(props) {
   );
   const [tableData, setTableData] = useState(filteredBookings);
   const columns = [
-    { title: "S.No", field: "id", align: "left" },
+    { title: <font color="#fff">S.No.</font>, field: "id", align: "left" },
     {
       title: <font color="#fff">Check-in</font>,
       field: "checkInDate",
       align: "left",
       type: "date",
-      dateSetting: { locale: "en-GB" },
-      filtering: "true"
+      dateSetting: { locale: "en-GB" }
     },
     {
       title: <font color="#fff">Check-out</font>,
       field: "checkOutDate",
       align: "left",
       type: "date",
-      dateSetting: { locale: "en-GB" },
-      filtering: "true"
+      dateSetting: { locale: "en-GB" }
     },
     { title: <font color="#fff">Source</font>, field: "source", align: "left" },
     {
@@ -181,6 +180,10 @@ export default function BookingEntries(props) {
         localization={{
           body: {
             emptyDataSourceMessage: "No bookings to display"
+          },
+          toolbar: {
+            exportCSVName: "Download",
+            exportTitle: "Download"
           }
         }}
         onRowClick={(evt, selectedRow) =>
@@ -188,7 +191,6 @@ export default function BookingEntries(props) {
         }
         options={{
           showTitle: false,
-          // tableLayout: "auto",
           sorting: true,
           search: true,
           searchFieldAlignment: "right",
@@ -207,9 +209,24 @@ export default function BookingEntries(props) {
           // paginationType: "stepped",
           // showFirstLastPageButtons: false,
           // paginationPosition: "top",
-          // exportButton: true,
-          // exportAllData: true,
-          // exportFileName: "TableData",
+          exportButton: { csv: true, pdf: false },
+          exportAllData: true,
+          // exportFileName: "Bookings_data",
+          exportCsv: (data, columns) => {
+            const columnTitles = data.map(
+              (columnDef) => columnDef.title.props.children
+            );
+            const csvData = columns.map((rowData) =>
+              data.map((columnDef) => rowData[columnDef.field])
+            );
+            const builder = new CsvBuilder(
+              `Bookings_${props.filteredMonthYear}.csv`
+            )
+              .setColumns(columnTitles)
+              .addRows(csvData)
+              .exportFile();
+            return builder;
+          },
           addRowPosition: "first",
           actionsColumnIndex: -1,
           // selection: true,

@@ -5,6 +5,7 @@ import AddIcon from "@material-ui/icons/Add";
 import Button from "@mui/material/Button";
 import PopupDialog from "../Features/PopupDialog";
 import ExpenseForm from "./ExpenseForm";
+import { CsvBuilder } from "filefy";
 
 export default function ExpenseEntries(props) {
   console.log("Im in ExpenseEntries");
@@ -33,7 +34,7 @@ export default function ExpenseEntries(props) {
   const [tableData, setTableData] = useState(filteredExpenses);
 
   const columns = [
-    { title: <font color="#fff">S.No</font>, field: "id", align: "left" },
+    { title: <font color="#fff">S.No.</font>, field: "id", align: "left" },
     {
       title: <font color="#fff">Expense date</font>,
       field: "expenseDate",
@@ -110,6 +111,10 @@ export default function ExpenseEntries(props) {
         localization={{
           body: {
             emptyDataSourceMessage: "No expenses to display"
+          },
+          toolbar: {
+            exportCSVName: "Download",
+            exportTitle: "Download"
           }
         }}
         options={{
@@ -135,9 +140,24 @@ export default function ExpenseEntries(props) {
           // paginationType: "stepped",
           // showFirstLastPageButtons: false,
           // paginationPosition: "top",
-          // exportButton: true,
-          // exportAllData: true,
+          exportButton: { csv: true, pdf: false },
+          exportAllData: true,
           // exportFileName: "TableData",
+          exportCsv: (data, columns) => {
+            const columnTitles = data.map(
+              (columnDef) => columnDef.title.props.children
+            );
+            const csvData = columns.map((rowData) =>
+              data.map((columnDef) => rowData[columnDef.field])
+            );
+            const builder = new CsvBuilder(
+              `Expenses_${props.filteredMonthYear}.csv`
+            )
+              .setColumns(columnTitles)
+              .addRows(csvData)
+              .exportFile();
+            return builder;
+          },
           addRowPosition: "first",
           actionsColumnIndex: -1,
           // selection: true,
