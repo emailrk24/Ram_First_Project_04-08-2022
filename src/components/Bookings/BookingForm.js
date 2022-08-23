@@ -28,7 +28,7 @@ export default function BookingForm(props) {
   const [enteredEDC, setEnteredEDC] = useState("");
   const [enteredAppPaidAmount, setEnteredAppPaidAmount] = useState("");
   const [enteredPendingAmount, setEnteredPendingAmount] = useState(0);
-  const [enteredBookingStatus, setEnteredBookingStatus] = useState("");
+  const [enteredBookingStatus, setEnteredBookingStatus] = useState("Pending");
 
   useEffect(() => {
     setEnteredTotalBill(totalBill);
@@ -160,7 +160,7 @@ export default function BookingForm(props) {
       bookingStatus: enteredBookingStatus
     };
 
-    // console.log(bookingDetail);
+    console.log(bookingDetail);
 
     props.onSaveBooking(bookingDetail);
 
@@ -181,7 +181,7 @@ export default function BookingForm(props) {
     setEnteredEDC("");
     setEnteredAppPaidAmount("");
     setEnteredPendingAmount(0);
-    setEnteredBookingStatus("");
+    setEnteredBookingStatus("Pending");
   };
 
   return (

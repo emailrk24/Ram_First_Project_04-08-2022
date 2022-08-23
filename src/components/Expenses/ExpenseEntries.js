@@ -22,7 +22,7 @@ export default function ExpenseEntries(props) {
       new Date(expense.expenseDate).getFullYear() === Number(yearMonth[0])
   );
 
-  console.table(filteredExpenses);
+  // console.table(filteredExpenses);
 
   const [id, setId] = useState(props.id);
 
