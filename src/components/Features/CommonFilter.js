@@ -3,8 +3,12 @@ import React from "react";
 import "./CommonFilter.css";
 
 export default function CommonFilter(props) {
-  const filterChangeHandler = (event) => {
-    props.onChangeFilter(event.target.value);
+  const filterMonthChangeHandler = (event) => {
+    props.onChangeMonthFilter(event.target.value);
+  };
+
+  const filterDateChangeHandler = (event) => {
+    props.onChangeDateFilter(event.target.value);
   };
 
   return (
@@ -13,7 +17,12 @@ export default function CommonFilter(props) {
         <input
           type="month"
           value={props.defaultMonthYear}
-          onChange={filterChangeHandler}
+          onChange={filterMonthChangeHandler}
+        />
+        <input
+          type="date"
+          value={props.defaultDate}
+          onChange={filterDateChangeHandler}
         />
       </div>
     </div>

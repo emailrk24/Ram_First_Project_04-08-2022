@@ -12,10 +12,23 @@ export default function BookingEntries(props) {
   const [selectedRow, setSelectedRow] = useState(null);
 
   let yearMonth = props.filteredMonthYear.split("-");
+  let date = props.filteredDate.split("-");
   const filteredBookings = props.bookingEntries.filter(
     (booking) =>
       new Date(booking.checkInDate).getMonth() + 1 === Number(yearMonth[1]) &&
       new Date(booking.checkInDate).getFullYear() === Number(yearMonth[0])
+  );
+  const filteredTodayCheckInBookings = props.bookingEntries.filter(
+    (booking) =>
+      new Date(booking.checkInDate).getMonth() + 1 === Number(date[1]) &&
+      new Date(booking.checkInDate).getFullYear() === Number(date[0]) &&
+      new Date(booking.checkInDate).getDate() === Number(date[2])
+  );
+  const filteredTodayCheckOutBookings = props.bookingEntries.filter(
+    (booking) =>
+      new Date(booking.checkOutDate).getMonth() + 1 === Number(date[1]) &&
+      new Date(booking.checkOutDate).getFullYear() === Number(date[0]) &&
+      new Date(booking.checkOutDate).getDate() === Number(date[2])
   );
   const [tableData, setTableData] = useState(filteredBookings);
   const columns = [

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "@mui/material/styles";
 import BookingEntries from "./components/Bookings/BookingEntries";
+import RoomEntries from "./components/Rooms/RoomEntries";
 import ExpenseEntries from "./components/Expenses/ExpenseEntries";
 import AccountEntries from "./components/Accounts/AccountEntries";
 import StaffEntries from "./components/Staffs/StaffEntries";
@@ -10,6 +11,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import BedroomParentIcon from "@mui/icons-material/BedroomParent";
 
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -17,6 +19,7 @@ import Box from "@mui/material/Box";
 
 import {
   testBookingEntries,
+  testRoomEntries,
   testExpenseEntries,
   testStaffEntries
 } from "./components/Constants/TestDataSet";
@@ -59,17 +62,31 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(
 export default function App() {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth() + 1;
+  const currentDay = new Date().getDate();
   const currentMonthYear =
     currentYear + "-" + (currentMonth > 10 ? currentMonth : "0" + currentMonth);
+  const currentDate =
+    currentYear +
+    "-" +
+    (currentMonth > 10 ? currentMonth : "0" + currentMonth) +
+    "-" +
+    (currentDay > 10 ? currentDay : "0" + currentDay);
 
   const [filteredMonthYear, setFilteredMonthYear] = useState(currentMonthYear);
+  const [filteredDate, setFilteredDate] = useState(currentDate);
 
-  const filterChangeHandler = (selectedMonthYear) => {
-    console.log("App.js - filterChangeHandler : " + selectedMonthYear);
+  const filterMonthChangeHandler = (selectedMonthYear) => {
+    console.log("App.js - filterMonthChangeHandler : " + selectedMonthYear);
     setFilteredMonthYear(selectedMonthYear);
   };
 
+  const filterDateChangeHandler = (selectedDate) => {
+    console.log("App.js - filterDateChangeHandler : " + selectedDate);
+    setFilteredDate(selectedDate);
+  };
+
   const [bookings, setBookings] = useState(testBookingEntries);
+  const [rooms, setRooms] = useState(testRoomEntries);
   const [expenses, setExpenses] = useState(testExpenseEntries);
   const [staffDetails, setStaffDetails] = useState(testStaffEntries);
 
@@ -125,7 +142,7 @@ export default function App() {
             value="2"
             label={
               <div>
-                <AccountBalanceWalletIcon /> EXPENSES
+                <BedroomParentIcon /> ROOMS
               </div>
             }
           />
@@ -133,12 +150,20 @@ export default function App() {
             value="3"
             label={
               <div>
-                <PeopleAltIcon /> STAFF MANAGEMENT
+                <AccountBalanceWalletIcon /> EXPENSES
               </div>
             }
           />
           <StyledTab
             value="4"
+            label={
+              <div>
+                <PeopleAltIcon /> STAFF MANAGEMENT
+              </div>
+            }
+          />
+          <StyledTab
+            value="5"
             label={
               <div>
                 <MenuBookIcon /> ACCOUNTS
@@ -147,7 +172,9 @@ export default function App() {
           />
           <CommonFilter
             defaultMonthYear={filteredMonthYear}
-            onChangeFilter={filterChangeHandler}
+            defaultDate={filteredDate}
+            onChangeMonthFilter={filterMonthChangeHandler}
+            onChangeDateFilter={filterDateChangeHandler}
           />
         </StyledTabs>
         <Box sx={{ p: 0.5 }} />
@@ -157,24 +184,34 @@ export default function App() {
           <BookingEntries
             bookingEntries={bookings}
             filteredMonthYear={filteredMonthYear}
+            filteredDate={filteredDate}
             onSaveBooking={addBookingHandler}
           />
         </TabPanel>
         <TabPanel value={tabValue} index={"2"}>
-          <ExpenseEntries
-            expenseEntries={expenses}
+          <RoomEntries
+            // roomEntries={rooms}
             filteredMonthYear={filteredMonthYear}
-            onSaveExpense={addExpenseHandler}
+            filteredDate={filteredDate}
+            bookingEntries={bookings}
           />
         </TabPanel>
         <TabPanel value={tabValue} index={"3"}>
+          <ExpenseEntries
+            expenseEntries={expenses}
+            filteredMonthYear={filteredMonthYear}
+            filteredDate={filteredDate}
+            onSaveExpense={addExpenseHandler}
+          />
+        </TabPanel>
+        <TabPanel value={tabValue} index={"4"}>
           <StaffEntries
             staffEntries={staffDetails}
             filteredMonthYear={filteredMonthYear}
             onSaveStaffDetail={addStaffDetailHandler}
           />
         </TabPanel>
-        <TabPanel value={tabValue} index={"4"}>
+        <TabPanel value={tabValue} index={"5"}>
           <AccountEntries
             filteredMonthYear={filteredMonthYear}
             bookingEntries={bookings}
